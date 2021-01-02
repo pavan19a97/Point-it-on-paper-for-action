@@ -17,7 +17,10 @@ class pointer:
         he, w, c = frame.shape
 
         # image = cv2.cvtColor(cv2.flip(image, -1), cv2.COLOR_BGR2RGB)
-        image = cv2.cvtColor(imgScan, cv2.COLOR_BGR2RGB)
+
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # image = cv2.cvtColor(imgScan, cv2.COLOR_BGR2RGB)
 
         image.flags.writeable = False
         results = hands.process(image)
@@ -49,6 +52,8 @@ def main():
 
     while True:
         suc, img = cap.read()
+        img = cv2.flip(img, 1)
+
         points, image = pointer.getIndexFingerPoints(img)
         try:
             font = cv2.FONT_HERSHEY_SIMPLEX

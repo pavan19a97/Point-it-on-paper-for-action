@@ -47,7 +47,7 @@ def main():
         image = cv2.resize(img, (1920//3, 1080//3))
         cv2.imshow("imageres", image )
         # img = cv2.rotate(img, cv2.cv2.ROTATE_180)
-        # img = cv2.flip(img, -1)
+        img = cv2.flip(img, 1)
 
         key = action(img)
         if key=="e":

@@ -17,7 +17,6 @@ class detectPaper:
         good = matches[:int(len(matches) * (per / 100))]
         srcPoints = np.float32([kp2[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
         dstPoints = np.float32([kp1[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
-
         M, _ = cv2.findHomography(srcPoints, dstPoints, cv2.RANSAC, 5.0)
         try:
             imgScan = cv2.warpPerspective(img, M, (w, h))
@@ -33,13 +32,16 @@ if __name__ == "__main__":
     cap.set(4, 1080)
 
     while cap.isOpened():
-        suc, img = cap.read()
-        img = cv2.resize(img, (1920 , 1080 ))
-        cv2.imshow("imageres", img)
-        # img = cv2.rotate(img, cv2.cv2.ROTATE_180)
-        # img = cv2.flip(img, -1)
-        imgS, h =detectPaper.getPaper(img)
+        try:
+            suc, img = cap.read()
+            img = cv2.resize(img, (1920 , 1080 ))
+            cv2.imshow("imageres", img)
+            # img = cv2.rotate(img, cv2.cv2.ROTATE_180)
+            # img = cv2.flip(img, -1)
+            imgS, h =detectPaper.getPaper(img)
 
-        # cv2.imshow("image", img)
-        if cv2.waitKey(10) & 0xFFF == ord("q"):
-            break
+            cv2.imshow("image", imgS)
+            if cv2.waitKey(10) & 0xFFF == ord("q"):
+                break
+        except:
+            print("ee")

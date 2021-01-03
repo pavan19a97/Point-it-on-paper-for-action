@@ -17,7 +17,9 @@ def imageData(img):
             print("hands not  founded")
             return "handsNotFounded", imageMediaPipe
         else:
+            imageCircle  = cv2.circle(imageMediaPipe, (points[0],points[1]), 10, (255,0,0), 20, cv2.LINE_AA)
             cv2.imshow("Hands With Media Pipe", cv2.resize(imageMediaPipe,(1920//3,1080//3)))
+            cv2.imshow("circle", imageCircle)
             pointedText, imgWithText = textRecognition.getPointedText(imgScan, points)
             if (pointedText == "pointIsNotInTextRegion"):
                 return pointedText, imgWithText
@@ -43,19 +45,23 @@ def main():
     cap.set(4,1080)
 
     while cap.isOpened():
-        suc, img = cap.read()
-        image = cv2.resize(img, (1920//3, 1080//3))
-        cv2.imshow("imageres", image )
-        # img = cv2.rotate(img, cv2.cv2.ROTATE_180)
-        img = cv2.flip(img, 1)
+        try:
+            suc, img = cap.read()
+            image = cv2.resize(img, (1920, 1080))
+            cv2.imshow("imageres", image )
+            # img = cv2.rotate(img, cv2.cv2.ROTATE_180)
 
-        key = action(img)
-        if key=="e":
-            pass
+            # img = cv2.flip(img, 1)
 
-        # cv2.imshow("image", img)
-        if cv2.waitKey(10) & 0xFFF == ord("q"):
-            break
+            key = action(img)
+            if key=="e":
+                pass
+
+            # cv2.imshow("image", img)
+            if cv2.waitKey(10) & 0xFFF == ord("q"):
+                break
+        except:
+            print("e")
 
 
 
